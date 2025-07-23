@@ -21,7 +21,10 @@ int main() {
         
         vector<vector<int>> dp(1 << n, vector<int>(n, INT_MAX));
         
-        dp[1][0] = 0;
+        // Initialize: can start from any city
+        for (int i = 0; i < n; i++) {
+            dp[1 << i][i] = 0;
+        }
         
         for (int mask = 1; mask < (1 << n); mask++) {
             for (int u = 0; u < n; u++) {
@@ -40,7 +43,7 @@ int main() {
         int full_mask = (1 << n) - 1;
         for (int u = 0; u < n; u++) {
             if (dp[full_mask][u] != INT_MAX) {
-                ans = min(ans, dp[full_mask][u]);
+                ans = min(ans, dp[full_mask][u]); // No return trip needed
             }
         }
         
